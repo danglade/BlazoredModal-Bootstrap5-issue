@@ -1,0 +1,36 @@
+﻿<ul class="list-group text-center" style="">
+
+    @if (isCreator)
+    {
+        <li @onclick=@(()=> Submit(PostOptions.Delete)) class="list-group-item text-danger fw-bold">Delete</li>
+        <li @onclick=@(()=> Submit(PostOptions.LimitComments)) class="list-group-item">Limit Comment</li>
+    }
+    else
+    {
+        <li @onclick=@(()=> Submit(PostOptions.Report)) class="list-group-item text-danger fw-bold">Report</li>
+    }
+
+    <li @onclick=@(()=> Submit(PostOptions.CopyLink)) class="list-group-item">Copy Link</li>
+    <li @onclick=@(()=> Cancel()) class="list-group-item">Cancel</li>
+</ul>
+
+@code {
+
+    [Parameter]
+    public bool isCreator { get; set; }
+    [CascadingParameter]
+    BlazoredModalInstance ModalInstance { get; set; }
+
+    private PostOptions postOptions;
+
+    async Task Cancel()
+    {
+        await ModalInstance.CancelAsync();
+    }
+
+    async Task Submit(PostOptions selectedPostOptions)
+    {
+        await ModalInstance.CloseAsync(ModalResult.Ok(selectedPostOptions));
+    }
+
+}

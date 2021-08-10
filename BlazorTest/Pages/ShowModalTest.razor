@@ -1,0 +1,35 @@
+﻿
+
+
+@for (int i = 1000 - 1; i >= 0 ; i--)
+{
+<h1 @onclick="Show">Test</h1>			 
+}
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    void Show()
+    {
+        bool isCreator = false;
+
+        if (1 == 2)
+        {
+            isCreator = true;
+        }
+
+        var options = new ModalOptions()
+        {
+            HideCloseButton = true,
+            HideHeader = true,
+            Position = ModalPosition.Center,
+            FocusFirstElement = true,
+
+        };
+
+        var PostOptionsViewParameters = new ModalParameters();
+        PostOptionsViewParameters.Add(nameof(PostOptionView.isCreator), isCreator);
+
+        Modal.Show<PostOptionView>("", PostOptionsViewParameters, options);
+    }
+}
